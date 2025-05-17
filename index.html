@@ -3,351 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Audit Report Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
-    <style>
-        /* Custom styles for the message box */
-        #message-box {
-            display: none;
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #f0fdf4;
-            color: #15803d;
-            padding: 16px;
-            border-radius: 6px;
-            border: 1px solid #16a34a;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-        }
-        #message-box.show {
-            display: block;
-        }
-    </style>
+    <title>Audit Observation Recording</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="bg-gray-100 font-inter">
-    <nav class="bg-green-500 shadow-md rounded-b-md">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center">
-                    <span class="text-white font-semibold text-xl">Audit Report Generator</span>
-                </div>
-                <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-4">
-                        <a href="index.html" class="text-gray-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="report.html" class="text-gray-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Reports</a>
-                        <a href="database.html" class="text-gray-200 hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Database</a>
-                    </div>
-                </div>
-                <div class="-mr-2 flex md:hidden">
-                    <button id="mobile-menu-button" class="bg-green-600 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg id="mobile-menu-icon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
-                        <svg id="mobile-menu-close-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="md:hidden" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="index.html" class="bg-green-700 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
-                <a href="report.html" class="text-gray-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Reports</a>
-                <a href="database.html" class="text-gray-200 hover:bg-green-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Database</a>
-            </div>
-        </div>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="report.html">Reports</a></li>
+            <li><a href="database.html">Database</a></li>
+        </ul>
     </nav>
 
-    <div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md mt-10">
-        <h1 class="text-2xl font-semibold text-green-600 mb-8 text-center">Generate Audit Report</h1>
-        <form id="audit-form" class="space-y-6">
-            <div>
-                <label for="unitName" class="block text-gray-700 text-sm font-bold mb-2">Unit Name:</label>
-                <select id="unitName" name="unitName" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="" disabled selected>Select Unit Name</option>
+    <div class="container">
+        <div class="sidebar">
+            <h3>Observation Categories</h3>
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
                 </select>
-            </div>
-
-            <div>
-                <label for="auditYear" class="block text-gray-700 text-sm font-bold mb-2">Audit Year:</label>
-                <input type="text" id="auditYear" name="auditYear" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-
-            <div>
-                <label for="observationDate1" class="block text-gray-700 text-sm font-bold mb-2">Observation Date:</label>
-                <input type="date" id="observationDate1" name="observationDate1" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" readonly>
-            </div>
-
-            <div>
-                <label for="observationCategory1" class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
-                <select id="observationCategory1" name="observationCategory1" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                    <option value="" disabled selected>Select Category</option>
-                </select>
-            </div>
-
-            <div>
-                <label for="observationTitle1" class="block text-gray-700 text-sm font-bold mb-2">Observation Title:</label>
-                <input type="text" id="observationTitle1" name="observationTitle1" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-
-            <div>
-                <label for="observationAmount1" class="block text-gray-700 text-sm font-bold mb-2">Amount (₹):</label>
-                <input type="number" id="observationAmount1" name="observationAmount1" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-            </div>
-
-            <div>
-                <label for="observationBody1" class="block text-gray-700 text-sm font-bold mb-2">Observation Body:</label>
-                <textarea id="observationBody1" name="observationBody1" rows="4" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-            </div>
-
-            <div id="additional-observations">
+            <div class="observation-list" id="observationList">
                 </div>
-
-            <button type="button" id="add-observation" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Observation</button>
-
-            <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline">Generate Report</button>
-        </form>
+        </div>
+        <div class="main-content">
+            <h2>Record New Observation</h2>
+            <form id="observationForm">
+                <div>
+                    <label for="unitName">Name of Unit:</label>
+                    <select id="unitName">
+                        <option value="">Select Unit</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="auditYear">Year of Audit:</label>
+                    <input type="number" id="auditYear" required value="2025">
+                </div>
+                <div>
+                    <label for="observationDate">Date:</label>
+                    <input type="text" id="observationDate" readonly>
+                </div>
+                <div>
+                    <label for="category">Category:</label>
+                    <select id="category">
+                         <option value="">Select Category</option>
+                         </select>
+                </div>
+                <div>
+                    <label for="observationTitle">Observation Title:</label>
+                    <input type="text" id="observationTitle" required>
+                </div>
+                <div>
+                    <label for="amount">Amount (Optional):</label>
+                    <input type="number" id="amount" placeholder="If applicable">
+                </div>
+                <div>
+                    <label for="observationBody">Observation Body:</label>
+                    <textarea id="observationBody" required></textarea>
+                </div>
+                <button type="button" onclick="saveObservation()">Save Observation</button>
+                <button type="button" onclick="generateReport()">Generate Report</button>
+            </form>
+        </div>
     </div>
 
-    <div id="message-box" class="hidden">
-        <p id="message-text"></p>
-    </div>
-
+    <script src="js/script.js"></script>
     <script>
-        const localBodiesData = [];
-        const categoriesData = [];
-        let observationCount = 1;
-
-        const unitNameDropdown = document.getElementById('unitName');
-        const categoryDropdown = document.getElementById('observationCategory1');
-        const observationDateInput = document.getElementById('observationDate1');
-        const addObservationButton = document.getElementById('add-observation');
-        const auditForm = document.getElementById('audit-form');
-        const additionalObservationsDiv = document.getElementById('additional-observations');
-        const messageBox = document.getElementById('message-box');
-        const messageText = document.getElementById('message-text');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileMenuIcon = document.getElementById('mobile-menu-icon');
-        const mobileMenuCloseIcon = document.getElementById('mobile-menu-close-icon');
-
-        function showMessage(message, type = 'success') {
-            messageText.textContent = message;
-            messageBox.className = `fixed top-4 left-1/2 transform -translate-x-1/2 bg-${type === 'success' ? 'green' : 'red'}-100 text-${type === 'success' ? 'green' : 'red'}-700 border border-${type === 'success' ? 'green' : 'red'}-400 px-4 py-2 rounded shadow-md z-50`;
-            messageBox.classList.add('show');
-            setTimeout(() => {
-                messageBox.classList.remove('show');
-            }, 3000);
-        }
-
-        function loadCSVData(file, callback) {
-            fetch(file)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Failed to fetch ${file}: ${response.status} ${response.statusText}`);
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    const lines = data.trim().split('\n');
-                    const headers = lines[0].split(',');
-                    const result = [];
-                    for (let i = 1; i < lines.length; i++) {
-                        const obj = {};
-                        const currentLine = lines[i].split(',');
-                        for (let j = 0; j < headers.length; j++) {
-                            obj[headers[j].trim()] = currentLine[j] ? currentLine[j].trim() : '';
-                        }
-                        result.push(obj);
-                    }
-                    callback(result);
-                })
-                .catch(error => {
-                    console.error('Error loading CSV data:', error);
-                    showMessage(`Error loading data from ${file}. Please check the file and try again.`, 'error');
-                });
-        }
-
-        function populateDropdown(dropdown, data, valueKey, textKey) {
-            dropdown.innerHTML = '<option value="" disabled selected>Select</option>';
-            data.forEach(item => {
-                const option = document.createElement('option');
-                option.value = item[valueKey];
-                option.textContent = item[textKey];
-                dropdown.appendChild(option);
-            });
-        }
-
-        function addObservationField() {
-            observationCount++;
-            const newObservationDiv = document.createElement('div');
-            newObservationDiv.innerHTML = `
-                <div class="mt-6">
-                    <label for="observationDate${observationCount}" class="block text-gray-700 text-sm font-bold mb-2">Observation Date:</label>
-                    <input type="date" id="observationDate${observationCount}" name="observationDate${observationCount}" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" value="${observationDateInput.value}" readonly>
-                </div>
-                <div>
-                    <label for="observationCategory${observationCount}" class="block text-gray-700 text-sm font-bold mb-2">Category:</label>
-                    <select id="observationCategory${observationCount}" name="observationCategory${observationCount}" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                        <option value="" disabled selected>Select Category</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="observationTitle${observationCount}" class="block text-gray-700 text-sm font-bold mb-2">Observation Title:</label>
-                    <input type="text" id="observationTitle${observationCount}" name="observationTitle${observationCount}" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div>
-                    <label for="observationAmount${observationCount}" class="block text-gray-700 text-sm font-bold mb-2">Amount (₹):</label>
-                    <input type="number" id="observationAmount${observationCount}" name="observationAmount${observationCount}" class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                </div>
-                <div>
-                    <label for="observationBody${observationCount}" class="block text-gray-700 text-sm font-bold mb-2">Observation Body:</label>
-                    <textarea id="observationBody${observationCount}" name="observationBody${observationCount}" rows="4" required class="shadow appearance-none border rounded w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
-                </div>
-            `;
-            additionalObservationsDiv.appendChild(newObservationDiv);
-
-            // Populate the category dropdown in the new observation field.
-            const newCategoryDropdown = document.getElementById(`observationCategory${observationCount}`);
-            populateDropdown(newCategoryDropdown, categoriesData, 'Number', 'Category Name');
-        }
-
-        /**
-         * Generates a report object from the form data and additional information.
-         *
-         * @param {FormData} formData - The form data containing user input.
-         * @param {Array} localBodiesData - Data from the Localbodies.csv file.
-         * @returns {object} - The report object.
-         */
-        function generateReportObject(formData, localBodiesData) {
-            const unitName = formData.get('unitName');
-            const unitData = localBodiesData.find(unit => unit.Name === unitName);
-
-            const report = {
-                title: "Audit Report", // Default title, you might want to make this dynamic
-                date: new Date().toISOString().split('T')[0],
-                unit: unitData ? {
-                    name: unitData.Name,
-                    address: unitData.Address,
-                    district: unitData.District,
-                    category: unitData.Category,
-                    head: unitData.Head
-                } : { name: unitName, error: "Unit data not found" }, // Include Unit Name and all available Data.
-                auditYear: formData.get('auditYear'),
-                observations: []
-            };
-
-            for (let i = 1; formData.get(`observationTitle${i}`); i++) {
-                const observation = {
-                    title: formData.get(`observationTitle${i}`),
-                    date: formData.get(`observationDate${i}`),
-                    category: formData.get(`observationCategory${i}`),
-                    amount: formData.get(`observationAmount${i}`),
-                    body: formData.get(`observationBody${i}`)
-                };
-                report.observations.push(observation);
-            }
-            return report;
-        }
-
-        /**
-         * Creates the report content as a string (for .txt format).
-         *
-         * @param {object} report - The report object.
-         * @returns {string} - The report content.
-         */
-        function createReportString(report) {
-            let reportString = `Audit Report\n\nDate: ${report.date}\n\n`;
-            if (report.unit.error) {
-                reportString += `Unit Name: ${report.unit.name} - ERROR: ${report.unit.error}\n\n`;
-            } else {
-                reportString += `Unit Name: ${report.unit.name}\nAddress: ${report.unit.address}\nDistrict: ${report.unit.district}\nCategory: ${report.unit.category}\nHead: ${report.unit.head}\n\n`;
-            }
-            reportString += `Audit Year: ${report.auditYear}\n\n`;
-
-            // Add other static content here
-            reportString += "Introduction\n\n";
-            reportString += "Finance\n\n";
-            reportString += "Organizational Setup\n\n";
-            reportString += "Scope of Audit\n\n";
-            reportString += "Audit Criteria\n\n";
-            reportString += "Audit Objective\n\n";
-            reportString += "Audit Mandate\n\n";
-            reportString += "Period\n\n";
-            reportString += "Audit Party\n\n";
-
-            report.observations.forEach((obs, index) => {
-                reportString += `Observation ${index + 1}:\n`;
-                reportString += `  Title: ${obs.title}\n`;
-                reportString += `  Date: ${obs.date}\n`;
-                reportString += `  Category: ${obs.category}\n`;
-                reportString += `  Amount: ${obs.amount}\n`;
-                reportString += `  Body: ${obs.body}\n\n`;
-            });
-
-            reportString += "Acknowledgement\n";
-            return reportString;
-        }
-
-        /**
-         * Creates the report content as a JSON string (for .json format).
-         *
-         * @param {object} report - The report object.
-         * @returns {string} - The JSON string.
-         */
-        function createReportJSON(report) {
-            return JSON.stringify(report, null, 2); // Pretty print JSON
-        }
-
-        function saveReport(report, format) {
-            const reportData = format === 'txt' ? createReportString(report) : createReportJSON(report);
-            const fileName = `audit_report_${report.date}.${format}`;
-            localStorage.setItem(fileName, reportData);
-            return fileName;
-        }
-
-        function handleSubmit(event) {
-            event.preventDefault();
-
-            const formData = new FormData(event.target);
-            const report = generateReportObject(formData, localBodiesData);
-            const txtFileName = saveReport(report, 'txt');
-            const jsonFileName = saveReport(report, 'json');
-            showMessage(`Report generated and saved successfully!   ফাইন্যান্সিয়াল ইন্টিগ্রিটি`);
-
-            // Redirect to report listing page
-            window.location.href = 'report.html'; //changed to report.html
-        }
-
-        // Event Listeners
-        addObservationButton.addEventListener('click', addObservationField);
-        auditForm.addEventListener('submit', handleSubmit);
-
-        // Load data and initialize form
-        loadCSVData('./data/localbodies.csv', data => {
-            localBodiesData.push(...data);
-            populateDropdown(unitNameDropdown, data, 'Name', 'Name');
+        // Auto-generate date on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            document.getElementById('observationDate').value = `${year}-${month}-${day}`;
+            loadLocalBodies();
+            loadObservations();
+            loadCategories(); // Load categories from CSV
         });
 
-        loadCSVData('data/categories.csv', data => {
-            categoriesData.push(...data);
-            populateDropdown(categoryDropdown, data, 'Number', 'Category Name');
-        });
-
-        // Set default observation date
-        observationDateInput.value = new Date().toISOString().split('T')[0];
-
-        // Mobile menu toggle functionality
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            mobileMenuIcon.classList.toggle('hidden');
-            mobileMenuCloseIcon.classList.toggle('hidden');
+        document.getElementById('categoryFilter').addEventListener('change', filterObservations);
+        document.getElementById('observationList').addEventListener('click', function(event) {
+            if (event.target.classList.contains('observation-item')) {
+                document.getElementById('observationBody').value = event.target.dataset.body;
+            }
         });
     </script>
 </body>
