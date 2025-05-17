@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Reports</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .report-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        #reportDisplayArea {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: sans-serif; /* Use a more common font */
+            background-color: #f8f8f8;
+            display: none;
+            line-height: 1.5;  /* Add line height for better readability */
+        }
+
+        #reportDisplayArea h2 {
+            margin-top: 0;
+            font-size: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        #reportDisplayArea h3 {
+            font-size: 1.2em;
+            margin-bottom: 0.2em;
+            margin-top: 1em;
+        }
+
+        #reportDisplayArea p {
+            margin-bottom: 0.5em;
+        }
+
+        #reportDisplayArea strong {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="report.html">Reports</a></li>
+            <li><a href="database.html">Database</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2>Audit Reports</h2>
+        <ul id="reportsList">
+            </ul>
+        <div id="reportDisplayArea">
+            <h2>Report Content</h2>
+            <div id="reportContent"></div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', loadReports);
+    </script>
+</body>
+</html>

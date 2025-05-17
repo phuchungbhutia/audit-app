@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audit Observation Recording</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="report.html">Reports</a></li>
+            <li><a href="database.html">Database</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="sidebar">
+            <h3>Observation Categories</h3>
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+                </select>
+            <div class="observation-list" id="observationList">
+                </div>
+        </div>
+        <div class="main-content">
+            <h2>Record New Observation</h2>
+            <form id="observationForm">
+                <div>
+                    <label for="unitName">Name of Unit:</label>
+                    <select id="unitName">
+                        <option value="">Select Unit</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="auditYear">Year of Audit:</label>
+                    <input type="number" id="auditYear" required value="2025">
+                </div>
+                <div>
+                    <label for="observationDate">Date:</label>
+                    <input type="text" id="observationDate" readonly>
+                </div>
+                <div>
+                    <label for="category">Category:</label>
+                    <select id="category">
+                         <option value="">Select Category</option>
+                         </select>
+                </div>
+                <div>
+                    <label for="observationTitle">Observation Title:</label>
+                    <input type="text" id="observationTitle" required>
+                </div>
+                <div>
+                    <label for="amount">Amount (Optional):</label>
+                    <input type="number" id="amount" placeholder="If applicable">
+                </div>
+                <div>
+                    <label for="observationBody">Observation Body:</label>
+                    <textarea id="observationBody" required></textarea>
+                </div>
+                <button type="button" onclick="saveObservation()">Save Observation</button>
+                <button type="button" onclick="generateReport()">Generate Report</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Auto-generate date on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            document.getElementById('observationDate').value = `${year}-${month}-${day}`;
+            loadLocalBodies();
+            loadObservations();
+            loadCategories(); // Load categories from CSV
+        });
+
+        document.getElementById('categoryFilter').addEventListener('change', filterObservations);
+        document.getElementById('observationList').addEventListener('click', function(event) {
+            if (event.target.classList.contains('observation-item')) {
+                document.getElementById('observationBody').value = event.target.dataset.body;
+            }
+        });
+    </script>
+</body>
+</html>
