@@ -123,7 +123,7 @@ Acknowledgment: The audit team appreciates the support and cooperation of the El
 
 
 function loadLocalBodies() {
-    fetch('data/localbodies.csv')
+    fetch('./data/localbodies.csv')
         .then(response => response.text())
         .then(data => {
             const lines = data.trim().split('\n').slice(1); // Skip header
